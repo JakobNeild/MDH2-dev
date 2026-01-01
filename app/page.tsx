@@ -1,5 +1,6 @@
 "use client"
 
+import React, { useState, useEffect } from "react"
 import { useEffect, useState } from "react"
 import { createClient } from "@supabase/supabase-js"
 import Link from "next/link"
@@ -14,7 +15,7 @@ interface Sector {
 }
 
 export default function Home() {
-  const [gridCells, setGridCells] = useState<JSX.Element[]>([])
+  const [gridCells, setGridCells] = useState<React.ReactElement[]>([])
 
   useEffect(() => {
     const size = 20
@@ -85,6 +86,7 @@ export default function Home() {
       const cells: JSX.Element[] = []
       for (let r = 0; r < totalRows; r++) {
         for (let c = 0; c < cols; c++) {
+
             cells.push(
               <div
                 key={`cell-${r}-${c}`}
