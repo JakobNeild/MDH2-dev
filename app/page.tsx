@@ -18,11 +18,6 @@ export default function Home() {
 
   useEffect(() => {
     const size = 20
-    const finalRowFilled = 10
-    const cols = Math.floor(window.innerWidth / size)
-    const visibleRows = Math.floor(window.innerHeight / size)
-    const rows = Math.max(visibleRows, finalRowFilled + 5)
-
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -34,23 +29,28 @@ export default function Home() {
         .select("*")
         .order("order_index", { ascending: true })
 
-      console.log("here")
-      console.log(sectors)
-
       if (error || !sectors) return
 
-      // create empty grid
-      const grid: (Sector | null)[][] = Array.from({ length: rows }, () =>
-        Array.from({ length: cols }, () => null)
-      )
+      const cols = Math.floor(window.innerWidth / size)
+      const visibleRows = Math.floor(window.innerHeight / size)
 
+      // Step 1: Place sectors
+      const grid: (Sector | null)[][] = []
       const sectorPositions: { sector: Sector; row: number; col: number }[] = []
+
+      // Start with 100 rows — we'll adjust later
+      const initialRows = 100
+      for (let r = 0; r < initialRows; r++) {
+        grid.push(Array.from({ length: cols }, () => null))
+      }
+
+      let bottomMostRow = 0
 
       for (const sector of sectors) {
         const { width, height } = sector
         let placed = false
 
-        for (let r = 0; r <= rows - height; r++) {
+        for (let r = 0; r <= grid.length - height; r++) {
           for (let c = 0; c <= cols - width; c++) {
             let canPlace = true
             for (let dr = 0; dr < height; dr++) {
@@ -65,6 +65,7 @@ export default function Home() {
                 }
               }
               sectorPositions.push({ sector, row: r, col: c })
+              bottomMostRow = Math.max(bottomMostRow, r + height - 1)
               placed = true
               break
             }
@@ -73,23 +74,28 @@ export default function Home() {
         }
       }
 
-      const cells: JSX.Element[] = []
+      // Step 2: Determine total rows to fill
+      const totalRows = Math.max(bottomMostRow + 5, visibleRows)
 
-      for (let r = 0; r < rows; r++) {
+      console.log("here")
+      console.log(totalRows)
+      console.log(cols)
+
+      // Step 3: Generate empty cells
+      const cells: JSX.Element[] = []
+      for (let r = 0; r < totalRows; r++) {
         for (let c = 0; c < cols; c++) {
-          const sector = grid[r][c]
-          if (!sector) {
             cells.push(
               <div
                 key={`cell-${r}-${c}`}
-                className="h-[20px] w-[20px] border-2 border-gray-100"
+                className="h-[20px] w-[20px] border-2 border-gray-200"
               />
             )
-          }
         }
       }
 
-      // Add sectors as absolute elements
+
+      // Step 4: Add sectors as absolute elements
       const sectorElements = sectorPositions.map(({ sector, row, col }) => (
         <a
           key={sector.id}
@@ -122,9 +128,7 @@ export default function Home() {
     <div className="relative min-h-screen w-full bg-white dark:bg-black overflow-y-auto">
       <div
         className="grid relative"
-        style={{
-          gridTemplateColumns: `repeat(auto-fill, 20px)`,
-        }}
+        style={{ gridTemplateColumns: `repeat(auto-fill, 20px)` }}
       >
         {gridCells}
       </div>
