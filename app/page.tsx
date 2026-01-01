@@ -25,7 +25,7 @@ export default function Home() {
 
     const fetchAndPlaceSectors = async () => {
       const { data: sectors, error } = await supabase
-        .from<Sector>("sectors")
+        .from("sectors")
         .select("*")
         .order("order_index", { ascending: true })
 
@@ -82,7 +82,7 @@ export default function Home() {
       console.log(cols)
 
       // Step 3: Generate empty cells
-      const cells: JSX.Element[] = []
+      const cells: React.ReactElement[] = []
       for (let r = 0; r < totalRows; r++) {
         for (let c = 0; c < cols; c++) {
 
