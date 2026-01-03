@@ -128,7 +128,7 @@ export default function Home() {
   return (
     <div className="relative min-h-screen w-full bg-white dark:bg-black overflow-y-auto">
       <div
-        className="grid relative"
+        className="grid relative animate-grid-in"
         style={{ gridTemplateColumns: `repeat(auto-fill, 20px)` }}
       >
         {gridCells}

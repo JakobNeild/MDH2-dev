@@ -41,3 +41,33 @@ body {
 .animate-fadeOutSlow {
   animation: fadeOutSlow 1.2s ease forwards;
 }
+
+@keyframes gridFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes sectorEnter {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-grid-in {
+  animation: gridFadeIn 600ms ease forwards;
+}
+
+.animate-sector-in {
+  opacity: 0;
+  animation: sectorEnter 450ms ease forwards;
+  will-change: opacity, transform;
+}
