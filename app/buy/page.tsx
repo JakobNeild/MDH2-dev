@@ -45,7 +45,7 @@ export default function BuyPage() {
             Bitcoin address:
           </p>
           <p className="text-sm font-mono break-all">
-            bc1q9x7h3p0t8k0qy2d4s7w9r03f8a9l3t9c5x2y4e
+            bc1q9x7h3p0t8k0qy2d4s7THISISNOTAREALBTCADDRESSw9r03f8a9l3t9c5x2y4e
           </p>
         </div>
 
