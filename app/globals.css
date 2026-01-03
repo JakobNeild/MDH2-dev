@@ -63,7 +63,7 @@ body {
 }
 
 .animate-grid-in {
-  animation: gridFadeIn 600ms ease forwards;
+  animation: gridFadeIn 2600ms ease forwards;
 }
 
 .animate-sector-in {

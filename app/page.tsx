@@ -97,27 +97,31 @@ export default function Home() {
 
 
       // Step 4: Add sectors as absolute elements
-      const sectorElements = sectorPositions.map(({ sector, row, col }) => (
-        <a
-          key={sector.id}
-          href={sector.link_url.startsWith("http") ? sector.link_url : `https://${sector.link_url}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="absolute block"
-          style={{
-            top: row * size,
-            left: col * size,
-            width: sector.width * size,
-            height: sector.height * size,
-          }}
-        >
-          <img
-            src={sector.image_url}
-            alt={sector.alt_text}
-            className="object-cover w-full h-full"
-          />
-        </a>
-      ))
+      const sectorElements = sectorPositions.map(
+        ({ sector, row, col }, index) => (
+          <a
+            key={sector.id}
+            href={sector.link_url.startsWith("http") ? sector.link_url : `https://${sector.link_url}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute block animate-sector-in"
+            style={{
+              top: row * size,
+              left: col * size,
+              width: sector.width * size,
+              height: sector.height * size,
+              animationDelay: `${index * 200}ms`,
+            }}
+          >
+            <img
+              src={sector.image_url}
+              alt={sector.alt_text}
+              className="object-cover w-full h-full"
+            />
+          </a>
+        )
+      )
+
 
       setGridCells([...cells, ...sectorElements])
     }
