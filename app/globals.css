@@ -62,14 +62,11 @@ body {
   }
 }
 
-.animate-sector-in {
-  opacity: 0;
-  animation: sectorEnter 2450ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+.animate-grid-in {
+  animation: gridFadeIn 2600ms ease forwards;
 }
 
-
 .animate-sector-in {
   opacity: 0;
-  animation: sectorEnter 450ms ease forwards;
-  will-change: opacity, transform;
+  animation: sectorEnter 450ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
