@@ -110,7 +110,7 @@ export default function Home() {
               left: col * size,
               width: sector.width * size,
               height: sector.height * size,
-              animationDelay: `${index * 200}ms`,
+              animationDelay: `${index * 75}ms`,
             }}
           >
             <img
